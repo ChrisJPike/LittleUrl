@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to li.tl</h1>
+    <h5>Make your BIG urls... <u>li.tl</u>!</h5>
+</div>
+
+<div style="width: 100%; margin-top: 60px;">
+    <div class="contentContainer container">        
+        <input type="text"
+                placeholder="Enter your BIG Url here ..."
+                class="inputTextbox"
+                id="longUrl" />
+
+        <button id="getUrl" class="submitButton" type="button">
+            Make it litl!
+        </button>
+
+        <br />
+        <br />
+        <label id="hereItIs" style="display:none;">Here's your new lt.il! Click on it to try it out!!</label>
+        <br />
+        <label id="result">Stick a url in the box above and click 'Make it litl!</label>
+        <br />
+        <br />
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(
+            function() {
+               $("#getUrl").click(function() {
+                    $.post("Home/Post", { "longUrl": $("#longUrl").val() })
+                        .done(function(response, status, jqxhr){
+                            var url = window.location.origin + "/" + response;
+                            $("#result").html('<a href="' + url + '" target="_blank">' + url + '</a>');
+                            $("#result").removeClass('error');
+                            $("#hereItIs").show();
+                        })
+                        .fail(function(response, status, error){ 
+                            // this is the ""error"" callback
+                            $("#result").html(response.responseText);
+                            $("#result").addClass('error');
+                            $("#hereItIs").hide();
+                        })
+                }); 
+            }); 
+    </script>
+}
