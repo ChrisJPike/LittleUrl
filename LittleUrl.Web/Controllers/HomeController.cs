@@ -44,7 +44,7 @@ namespace LittleUrl.Website.Controllers
             var longUrl = await LitlUrlService.GetWithCode(code);
 
             return longUrl == null
-                ? StatusCode(500, "We're really sorry, but an error occured creating your li.tl.  Please try again later.")
+                ? StatusCode(500, "We're really sorry, but an error occured getting your li.tl.  Please try again later.")
                 : (longUrl.Trim().Length > 0
                     ? Redirect(longUrl)
                     : NotFound("We're sorry, but that is not a valid li.tl url.")
